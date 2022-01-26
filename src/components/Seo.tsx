@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const defaultMeta = {
-  title: 'Next.js TypeScript Starter',
-  siteName: process.env.NEXT_PUBLIC_HOSTNAME || 'lordronz.github.io',
-  description: 'NextJS Typescript Boilerplate.',
+  title: 'Link Shortener',
+  siteName: process.env.NEXT_PUBLIC_HOSTNAME || 'lr-link.vercel.app',
+  description: 'Link Shortener with Notion API.',
   url: process.env.NEXT_PUBLIC_HOSTNAME
     ? `https://${process.env.NEXT_PUBLIC_HOSTNAME}`
-    : 'https://lordronz.github.io',
+    : 'https://lr-link.vercel.app',
   image: '/vercel.svg',
   type: 'website',
   robots: 'follow, index',

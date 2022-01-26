@@ -3,6 +3,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { addLink, checkSlugIsTaken } from '@/lib/notion';
 
+const linkRegex =
+  /^(?:https?:\/\/|s?ftps?:\/\/)(?!www | www\.)[A-Za-z0-9_-]+\.+[A-Za-z0-9./%#*&=?_:;-]+$/;
+
+const slugRegex = /^\S+$/;
+
 const NewLinkHandler = withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
@@ -16,6 +21,18 @@ const NewLinkHandler = withIronSessionApiRoute(
       if (!url.link || !url.slug) {
         return res.status(400).json({
           message: 'Link and slug are required',
+        });
+      }
+
+      if (!slugRegex.test(url.slug)) {
+        return res.status(400).json({
+          message: 'Please input a valid slug',
+        });
+      }
+
+      if (!linkRegex.test(url.link)) {
+        return res.status(400).json({
+          message: 'Please input a valid link',
         });
       }
 
