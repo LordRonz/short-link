@@ -12,51 +12,51 @@ import shouko from '../../public/images/nishimiya_shouko.jpg';
 
 const toastStyle = { background: '#333', color: '#eee' };
 
-const Login: NextPage = () => {
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+const NewLinkPage: NextPage = () => {
+  const [slug, setSlug] = useState<string>('');
+  const [link, setLink] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     toast.promise(
-      axios.post('/api/login', {
-        name,
-        password,
+      axios.post('/api/new', {
+        slug,
+        link,
       }),
       {
         loading: 'Loading...',
         success: () => {
-          return 'Logged in !, guten morgen sir!';
+          return 'Success !, new link created!';
         },
         error: (e) => {
           if (axios.isAxiosError(e)) {
             return e.response?.data.message ?? e.message;
           }
-          return 'Login failed, who tf are you';
+          return 'Failed to create new link!';
         },
       }
     );
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setName(e.target.value);
+    setSlug(e.target.value);
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setPassword(e.target.value);
+    setLink(e.target.value);
   };
 
   return (
     <>
-      <Seo templateTitle='Login' />
+      <Seo templateTitle='New Link' />
       <main>
         <section className='bg-black text-primary-50'>
           <div className='layout flex flex-col justify-center items-center min-h-screen text-center gap-y-12'>
             <div>
-              <h1 className='text-4xl text-primary-300 mb-4'>Login</h1>
+              <h1 className='text-4xl text-primary-300 mb-4'>New Link</h1>
               <Image
                 src={shouko}
                 alt='Shouko Nishimiya'
@@ -65,22 +65,22 @@ const Login: NextPage = () => {
               />
             </div>
             <form onSubmit={handleSubmit}>
-              <label htmlFor='name'>Name</label>
+              <label htmlFor='slug'>Slug</label>
               <input
                 type='text'
-                name='name'
+                name='slug'
                 className='block p-2 border-2 rounded-lg border-primary-300 bg-gray-900 mb-4'
-                onChange={handleNameChange}
+                onChange={handleSlugChange}
               />
-              <label htmlFor='password'>Password</label>
+              <label htmlFor='link'>Link</label>
               <input
-                type='password'
-                name='password'
+                type='text'
+                name='link'
                 className='block p-2 border-2 rounded-lg border-primary-300 bg-gray-900 mb-4'
-                onChange={handlePasswordChange}
+                onChange={handleLinkChange}
               />
               <div className='mt-2'>
-                <Button type='submit'>Submit</Button>
+                <Button type='submit'>Shorten!</Button>
               </div>
             </form>
 
@@ -107,4 +107,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default NewLinkPage;
