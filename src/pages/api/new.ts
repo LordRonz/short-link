@@ -6,6 +6,12 @@ import { addLink, checkSlugIsTaken } from '@/lib/notion';
 const NewLinkHandler = withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
+      const user = req.session.user;
+
+      if (!user || user?.admin !== true) {
+        return res.status(401).send({ message: 'Unauthorized' });
+      }
+
       const url = req.body as { link: string; slug: string };
       if (!url.link || !url.slug) {
         return res.status(400).json({
