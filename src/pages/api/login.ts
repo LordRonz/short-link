@@ -23,6 +23,12 @@ export type UserSession = {
   admin?: boolean;
 };
 
+export type LoginResponse = {
+  message?: string;
+  status?: number;
+  ok?: boolean;
+};
+
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;

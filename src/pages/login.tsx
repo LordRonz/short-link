@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Button from '@/components/buttons/Button';
 import ArrowLink from '@/components/links/ArrowLink';
 import Seo from '@/components/Seo';
+import type { LoginResponse } from '@/pages/api/login';
 
 import shouko from '../../public/images/nishimiya_shouko.jpg';
 
@@ -20,7 +21,7 @@ const Login: NextPage = () => {
     e.preventDefault();
 
     toast.promise(
-      axios.post('/api/login', {
+      axios.post<LoginResponse>('/api/login', {
         name,
         password,
       }),
