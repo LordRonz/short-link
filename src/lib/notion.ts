@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client';
 
-import { LinkResult, PageIcon, TreeResult } from '@/types/notion';
+import type { LinkResult, PageIcon, TreeResult } from '@/types/notion';
 
 const NOTION_LINK_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_LINK_DATABASE_ID;
 const NOTION_TREE_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_TREE_DATABASE_ID;

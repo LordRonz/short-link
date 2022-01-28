@@ -1,67 +1,67 @@
 //#region  //*=========== Links ===========
-export interface LinkResult {
+export type LinkResult = {
   id: string;
   properties: LinkProperties;
-}
+};
 
-interface LinkProperties {
+type LinkProperties = {
   count: TextColumn;
   link: TextColumn;
   slug: TitleColumn;
-}
+};
 //#endregion  //*======== Links ===========
 
 //#region  //*=========== Social Tree ===========
-export interface TreeResult {
+export type TreeResult = {
   id: string;
   properties: TreeProperties;
   icon: PageIcon;
-}
+};
 
-interface TreeProperties {
+type TreeProperties = {
   link: TextColumn;
   display: TitleColumn;
   order: NumberColumn;
-}
+};
 //#endregion  //*======== Social Tree ===========
 
 //#region  //*=========== Commons ===========
-interface ExternalIcon {
+type ExternalIcon = {
   type: 'external';
   external: {
     url: string;
   };
-}
-interface EmojiIcon {
+};
+type EmojiIcon = {
   type: 'emoji';
   emoji: string;
-}
-interface FileIcon {
+};
+type FileIcon = {
   type: 'file';
   file: { url: string };
-}
+};
 export type PageIcon = ExternalIcon | EmojiIcon | FileIcon | null;
 
-interface TitleColumn {
+type TitleColumn = {
   id: string;
   type: 'title';
   title: [RichText];
-}
+};
 
-interface TextColumn {
+type TextColumn = {
   id: string;
   type: 'rich_text';
   rich_text: [RichText | undefined];
-}
+};
 
-interface NumberColumn {
+type NumberColumn = {
   id: string;
   type: 'number';
   number: number;
-}
+};
 
-interface RichText {
+type RichText = {
   type: string;
   plain_text: string;
-}
+};
 //#endregion  //*======== Commons ===========

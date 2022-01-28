@@ -1,6 +1,6 @@
 import faunadb, { query as q } from 'faunadb';
 
-import { User, UserRes } from '@/types/fauna';
+import type { User, UserRes } from '@/types/fauna';
 
 const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET as string,
