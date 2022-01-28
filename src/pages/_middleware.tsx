@@ -6,7 +6,7 @@ import { getUrlBySlug } from '@/lib/notion';
 const middleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname.split('/')[1];
   const whitelist = ['favicons', 'fonts', 'images', 'svg', '', 'login', 'new'];
-  if (whitelist.includes(path)) {
+  if (whitelist.includes(path) || process.env.CI) {
     return;
   }
 
