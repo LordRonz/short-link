@@ -15,7 +15,7 @@ import useRQWithToast from '@/hooks/toast/useRQWithToast';
 import { Url } from '@/lib/notion';
 import trimHttps from '@/lib/trimHttp';
 
-export default function DetailPage() {
+const DetailPage = () => {
   //#region  //*=========== Get Route Param ===========
   const router = useRouter();
   const idParam = router.query.slug;
@@ -91,4 +91,6 @@ export default function DetailPage() {
       </main>
     </>
   );
-}
+};
+
+export default DetailPage;

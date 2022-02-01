@@ -8,7 +8,7 @@ type FaviconProps = {
   fullUrl: string;
 } & Omit<NextImageProps, 'src' | 'alt' | 'width' | 'height'>;
 
-export default function Favicon({ className, fullUrl, ...rest }: FaviconProps) {
+const Favicon = ({ className, fullUrl, ...rest }: FaviconProps) => {
   const FAVICON_URL = 'https://icons.duckduckgo.com/ip3/';
   const { hostname } = new URL(fullUrl);
 
@@ -24,4 +24,6 @@ export default function Favicon({ className, fullUrl, ...rest }: FaviconProps) {
       {...rest}
     />
   );
-}
+};
+
+export default Favicon;
