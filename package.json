@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^0.4.13",
+    "@types/react-copy-to-clipboard": "^5.0.2",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "clsx": "^1.1.1",
@@ -29,9 +30,12 @@
     "next-themes": "^0.0.15",
     "preact": "^10.6.5",
     "react": "17.0.2",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "17.0.2",
     "react-hot-toast": "^2.2.0",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-qr-code": "^2.0.3",
+    "react-query": "^3.34.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",

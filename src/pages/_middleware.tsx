@@ -15,7 +15,7 @@ const middleware = async (req: NextRequest) => {
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
   if (isDetailPage) {
-    return url.link ? NextResponse.redirect('/new?slug=' + path) : undefined;
+    return url.link ? undefined : NextResponse.redirect('/new?slug=' + path);
   }
 
   if (url.link) {
