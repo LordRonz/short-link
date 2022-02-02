@@ -24,4 +24,10 @@ const Home: NextPage = () => {
   );
 };
 
+export const getServerSideProps = () => {
+  return {
+    props: { message: 'hey' },
+  };
+};
+
 export default Home;

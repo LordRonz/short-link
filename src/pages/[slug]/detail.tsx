@@ -12,7 +12,7 @@ import PrimaryLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
 import Skeleton from '@/components/Skeleton';
 import useRQWithToast from '@/hooks/toast/useRQWithToast';
-import { Url } from '@/lib/notion';
+import type { Url } from '@/lib/notion';
 import trimHttps from '@/lib/trimHttp';
 
 const DetailPage = () => {

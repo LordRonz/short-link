@@ -8,7 +8,7 @@ const QRCode = ({ link, className }: { link: string; className?: string }) => {
         value={link}
         className='mx-auto'
         bgColor='#222222'
-        fgColor='var(--clr-primary-400)'
+        fgColor='var(--clr-primary-300)'
         id='QRCode'
       />
     </div>
