@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 import Button from '@/components/buttons/Button';
@@ -15,6 +16,8 @@ const toastStyle = { background: '#333', color: '#eee' };
 const NewLinkPage: NextPage = () => {
   const [slug, setSlug] = useState<string>('');
   const [link, setLink] = useState<string>('');
+
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,6 +52,14 @@ const NewLinkPage: NextPage = () => {
     setLink(e.target.value);
   };
 
+  useEffect(() => {
+    if (!router.isReady) return;
+    const query = router.query;
+    if (query.slug) {
+      setSlug(query.slug as string);
+    }
+  }, [router.isReady, router.query]);
+
   return (
     <>
       <Seo templateTitle='New Link' />
@@ -71,6 +82,7 @@ const NewLinkPage: NextPage = () => {
                 name='slug'
                 className='block p-2 border-2 rounded-lg border-primary-300 bg-gray-900 mb-4'
                 onChange={handleSlugChange}
+                defaultValue={slug}
               />
               <label htmlFor='link'>Link</label>
               <input

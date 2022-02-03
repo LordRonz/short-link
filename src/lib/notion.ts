@@ -15,6 +15,27 @@ export type Url = {
   count: number;
 };
 
+export const getUrls = async () => {
+  if (!NOTION_LINK_DATABASE_ID) {
+    throw new Error('NEXT_PUBLIC_NOTION_LINK_DATABASE_ID env is not defined');
+  }
+
+  const response = await notion.databases.query({
+    database_id: NOTION_LINK_DATABASE_ID,
+  });
+
+  const results = response.results as unknown as LinkResult[];
+
+  const urls: Url[] = results.map((result) => ({
+    pageId: result?.id,
+    slug: result?.properties.slug.title[0]?.plain_text,
+    link: result?.properties.link.rich_text[0]?.plain_text,
+    count: Number(result?.properties.count.rich_text[0]?.plain_text ?? 0),
+  }));
+
+  return urls;
+};
+
 /**
  * Get long URL by slug
  */
