@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const defaultMeta = {
-  title: 'Link Shortener',
+  title: "Aaron's link tree",
   siteName: process.env.NEXT_PUBLIC_HOSTNAME || 'lr-link.vercel.app',
   description: 'Link Shortener with Notion API.',
   url: process.env.NEXT_PUBLIC_HOSTNAME
