@@ -82,7 +82,7 @@ const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const urls = await getSocialTree();
+  const urls = process.env.CI ? [] : await getSocialTree();
 
   return {
     props: { urls },
