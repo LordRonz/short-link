@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type { NextPage } from 'next';
+import { withIronSessionSsr } from 'iron-session/next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -118,5 +119,34 @@ const NewLinkPage: NextPage = () => {
     </>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
+  async ({ req }) => {
+    const user = req.session.user;
+
+    if (!user || user?.admin !== true) {
+      return {
+        redirect: {
+          destination: '/login',
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        user: req.session.user,
+      },
+    };
+  },
+  {
+    cookieName: 'anjay_kue',
+    password: process.env.COOKIE_PASS as string,
+    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
+    cookieOptions: {
+      secure: process.env.NODE_ENV === 'production',
+    },
+  }
+);
 
 export default NewLinkPage;

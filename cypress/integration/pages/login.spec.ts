@@ -1,6 +1,6 @@
 import { beforeEach, cy, describe, it } from 'local-cypress';
 
-describe('Index Page', () => {
+describe('Login Page', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/login');
   });

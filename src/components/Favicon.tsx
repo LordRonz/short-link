@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import * as React from 'react';
 
 import type { NextImageProps } from '@/components/NextImage';
 import NextImage from '@/components/NextImage';

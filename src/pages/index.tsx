@@ -50,8 +50,8 @@ const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
                       'focus:outline-none focus-visible:ring focus-visible:ring-primary-500'
                     )}
                   >
-                    {icon ? (
-                      icon.type === 'emoji' ? (
+                    {icon &&
+                      (icon.type === 'emoji' ? (
                         icon.emoji + ' '
                       ) : icon.type === 'external' ? (
                         <img
@@ -67,8 +67,7 @@ const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
                           height={20}
                           alt={`${display} Icon`}
                         />
-                      )
-                    ) : null}
+                      ))}
                     {display}
                   </a>
                 </div>
