@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ReactQRCode from 'react-qr-code';
 
 const QRCode = ({ link, className }: { link: string; className?: string }) => {

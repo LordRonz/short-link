@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import * as React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import toast from 'react-hot-toast';
 import { HiClipboard } from 'react-icons/hi';
