@@ -5,7 +5,7 @@ describe('New Page', () => {
     cy.visit('http://localhost:3000/new');
   });
 
-  it('should display correct heading', () => {
-    cy.get('h1').should('contain', 'New Link');
+  it('should redirect to login page', () => {
+    cy.location('pathname').should('eq', '/login');
   });
 });

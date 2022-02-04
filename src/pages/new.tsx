@@ -124,17 +124,6 @@ export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
   async ({ req }) => {
     const user = req.session.user;
 
-    if (process.env.CI === 'true') {
-      return {
-        props: {
-          user: {
-            name: 'CI',
-            admin: false,
-          },
-        },
-      };
-    }
-
     if (!user || user?.admin !== true) {
       return {
         redirect: {
