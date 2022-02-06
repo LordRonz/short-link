@@ -37,7 +37,7 @@
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-qr-code": "^2.0.3",
-    "react-query": "^3.34.12"
+    "react-query": "^3.34.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
