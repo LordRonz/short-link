@@ -1,9 +1,9 @@
-import type { NextRequest } from 'next/server';
+import type { NextMiddleware, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { getUrlBySlug } from '@/lib/notion';
 
-const middleware = async (req: NextRequest) => {
+const middleware: NextMiddleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname.split('/')[1];
   const whitelist = ['favicons', 'fonts', 'images', 'svg', '', 'login', 'new'];
   if (whitelist.includes(path) || process.env.CI) {
@@ -35,7 +35,7 @@ const middleware = async (req: NextRequest) => {
       }
     }
 
-    return NextResponse.redirect(url.link);
+    return NextResponse.redirect(url.link + req.nextUrl.search);
   }
 };
 

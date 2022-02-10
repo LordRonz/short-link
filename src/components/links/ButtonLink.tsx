@@ -4,12 +4,12 @@ import UnstyledLink, {
   UnstyledLinkProps,
 } from '@/components/links/UnstyledLink';
 
-enum ButtonVariant {
-  'primary',
-  'outline',
-  'ghost',
-  'light',
-  'dark',
+const enum ButtonVariant {
+  primary,
+  outline,
+  ghost,
+  light,
+  dark,
 }
 
 export type ButtonLinkProps = {
