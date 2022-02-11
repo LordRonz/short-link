@@ -2,12 +2,10 @@
 import clsx from 'clsx';
 import type { NextPage } from 'next';
 import type { GetServerSideProps } from 'next';
-import { Toaster } from 'react-hot-toast';
 
 import Accent from '@/components/Accent';
 import CustomLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
-import { toastStyle } from '@/constant/toast';
 import type { Tree } from '@/lib/notion';
 import { getSocialTree } from '@/lib/notion';
 
@@ -78,17 +76,6 @@ const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
           </div>
         </section>
       </main>
-      <Toaster
-        toastOptions={{
-          style: toastStyle,
-          loading: {
-            iconTheme: {
-              primary: '#eb2754',
-              secondary: 'black',
-            },
-          },
-        }}
-      />
     </>
   );
 };
