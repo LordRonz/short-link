@@ -6,6 +6,6 @@ describe('Index Page', () => {
   });
 
   it('should display correct heading', () => {
-    cy.get('h1').should('contain', 'Aaron\'s link tree');
+    cy.get('h1').should('contain', "Aaron's link tree");
   });
 });
