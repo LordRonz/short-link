@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { Toaster } from 'react-hot-toast';
 import { HiCursorClick } from 'react-icons/hi';
 import { useQuery } from 'react-query';
 
@@ -11,6 +12,7 @@ import ArrowLink from '@/components/links/ArrowLink';
 import PrimaryLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
 import Skeleton from '@/components/Skeleton';
+import { toastStyle } from '@/constant/toast';
 import useRQWithToast from '@/hooks/toast/useRQWithToast';
 import type { Url } from '@/lib/notion';
 import trimHttps from '@/lib/trimHttp';
@@ -89,6 +91,17 @@ const DetailPage = () => {
           </div>
         </section>
       </main>
+      <Toaster
+        toastOptions={{
+          style: toastStyle,
+          loading: {
+            iconTheme: {
+              primary: '#eb2754',
+              secondary: 'black',
+            },
+          },
+        }}
+      />
     </>
   );
 };
