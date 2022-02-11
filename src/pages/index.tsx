@@ -1,20 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from 'clsx';
 import type { NextPage } from 'next';
-import type { GetServerSideProps } from 'next';
+import { Toaster } from 'react-hot-toast';
+import { ImSpinner2 } from 'react-icons/im';
+import { useQuery } from 'react-query';
 
 import Accent from '@/components/Accent';
 import CustomLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
+import { toastStyle } from '@/constant/toast';
+import useRQWithToast from '@/hooks/toast/useRQWithToast';
 import type { Tree } from '@/lib/notion';
-import { getSocialTree } from '@/lib/notion';
 
-type HomePageProp = {
-  urls: Tree[];
-  children?: React.ReactNode;
-};
+const Home: NextPage = () => {
+  //#region  //*=========== Get Url Data ===========
+  const { data } = useRQWithToast(
+    useQuery<{ tree: Tree[] }, Error>('/api/socialtree', { retry: 1 }),
+    {
+      loading: 'Fetching social tree...',
+      success: 'Social tree fetched successfully',
+    }
+  );
+  //#endregion  //*======== Get Url Data ===========
 
-const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
   return (
     <>
       <Seo />
@@ -28,64 +36,71 @@ const Home: NextPage<HomePageProp> = ({ urls }: HomePageProp) => {
               Login
             </CustomLink>
             <div className='grid gap-4 mx-auto mt-8 w-full max-w-sm text-center'>
-              {urls.map(({ id, display, link, icon }) => (
-                <div className='group relative' key={id}>
-                  <div
-                    className={clsx(
-                      'opacity-0 group-hover:opacity-100',
-                      'animate-tilt absolute -inset-0.5 z-0 rounded blur',
-                      'bg-gradient-to-r from-rose-800 to-amber-700',
-                      'transition duration-300 group-hover:duration-200',
-                      'pointer-events-none'
-                    )}
-                  />
+              {data?.tree ? (
+                data?.tree.map(({ id, display, link, icon }) => (
+                  <div className='group relative' key={id}>
+                    <div
+                      className={clsx(
+                        'opacity-0 group-hover:opacity-100',
+                        'animate-tilt absolute -inset-0.5 z-0 rounded blur',
+                        'bg-gradient-to-r from-rose-800 to-amber-700',
+                        'transition duration-300 group-hover:duration-200',
+                        'pointer-events-none'
+                      )}
+                    />
 
-                  <a
-                    href={link}
-                    className={clsx(
-                      'flex relative gap-2 justify-center items-center',
-                      'px-4 py-4 font-medium transition-colors md:text-lg ',
-                      'bg-dark',
-                      'border border-gray-700',
-                      'focus:outline-none focus-visible:ring focus-visible:ring-primary-500'
-                    )}
-                  >
-                    {icon &&
-                      (icon.type === 'emoji' ? (
-                        icon.emoji + ' '
-                      ) : icon.type === 'external' ? (
-                        <img
-                          src={icon.external.url}
-                          width={20}
-                          height={20}
-                          alt={`${display} Icon`}
-                        />
-                      ) : (
-                        <img
-                          src={icon.file.url}
-                          width={20}
-                          height={20}
-                          alt={`${display} Icon`}
-                        />
-                      ))}
-                    {display}
-                  </a>
-                </div>
-              ))}
+                    <a
+                      href={link}
+                      className={clsx(
+                        'flex relative gap-2 justify-center items-center',
+                        'px-4 py-4 font-medium transition-colors md:text-lg ',
+                        'bg-dark',
+                        'border border-gray-700',
+                        'focus:outline-none focus-visible:ring focus-visible:ring-primary-500'
+                      )}
+                    >
+                      {icon &&
+                        (icon.type === 'emoji' ? (
+                          icon.emoji + ' '
+                        ) : icon.type === 'external' ? (
+                          <img
+                            src={icon.external.url}
+                            width={20}
+                            height={20}
+                            alt={`${display} Icon`}
+                          />
+                        ) : (
+                          <img
+                            src={icon.file.url}
+                            width={20}
+                            height={20}
+                            alt={`${display} Icon`}
+                          />
+                        ))}
+                      {display}
+                    </a>
+                  </div>
+                ))
+              ) : (
+                <ImSpinner2 className='animate-spin mx-auto text-4xl' />
+              )}
             </div>
           </div>
         </section>
       </main>
+      <Toaster
+        toastOptions={{
+          style: toastStyle,
+          loading: {
+            iconTheme: {
+              primary: '#eb2754',
+              secondary: 'black',
+            },
+          },
+        }}
+      />
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const urls = process.env.CI ? [] : await getSocialTree();
-
-  return {
-    props: { urls },
-  };
 };
 
 export default Home;
