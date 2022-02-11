@@ -13,3 +13,5 @@ export const DEFAULT_TOAST_MESSAGE = {
     return 'Login failed, who tf are you';
   },
 };
+
+export const toastStyle = { background: '#333', color: '#eee' };
