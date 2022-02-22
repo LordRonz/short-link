@@ -33,9 +33,9 @@ const NewLinkPage: NextPage = () => {
         success: () => {
           return 'Success !, new link created!';
         },
-        error: (e) => {
-          if (axios.isAxiosError(e)) {
-            return e.response?.data.message ?? e.message;
+        error: (err: Error) => {
+          if (axios.isAxiosError(err)) {
+            return err.response?.data.message ?? err.message;
           }
           return 'Failed to create new link!';
         },

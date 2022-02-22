@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from 'clsx';
-import type { NextPage } from 'next';
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import Accent from '@/components/Accent';
 import CustomLink from '@/components/links/CustomLink';
