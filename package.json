@@ -19,7 +19,7 @@
     "cy:headless": "cypress run"
   },
   "dependencies": {
-    "@notionhq/client": "^1.0.2",
+    "@notionhq/client": "^1.0.3",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
