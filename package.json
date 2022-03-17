@@ -40,7 +40,7 @@
     "react-query": "^3.34.16"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.1",
+    "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@types/bcrypt": "^5.0.0",
     "@types/node": "17.0.21",
