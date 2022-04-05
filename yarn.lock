@@ -2613,10 +2613,10 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-iron-session@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/iron-session/-/iron-session-6.1.1.tgz#3957e4bab29c21a3cde7c52cdeee37e0905a3894"
-  integrity sha512-kTzE57X8aV02glZS5GoQHKZTfSyTgBaG2aMYOhQITUdvSD/RB4w0YZjUUzKC3uQrKWlXyjpnvROGwXtJOf1v7Q==
+iron-session@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/iron-session/-/iron-session-6.1.2.tgz#ae2f673409435c94fc4e9d93ea80c1965f3255c4"
+  integrity sha512-u1lTrT157sDz8UxCEANwdBUTUSYGbuySBjOcWVqdHCcCpgbO8CzguJBOaq/vpxJHQoIKZtD6MlzichhThRlq/A==
   dependencies:
     "@hapi/iron" "^6.0.0"
     "@types/cookie" "^0.4.0"
