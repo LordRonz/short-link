@@ -5,6 +5,12 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider, QueryOptions } from 'react-query';
 
+declare module 'next-themes' {
+  interface ThemeProviderProps {
+    children: React.ReactNode;
+  }
+}
+
 const defaultQueryFn = async ({ queryKey }: QueryOptions) => {
   const { data } = await axios.get(`${queryKey?.[0]}`);
   return data;
