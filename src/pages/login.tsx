@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Image from 'next/image';
@@ -30,7 +31,7 @@ const Login: NextPage = () => {
         success: () => {
           return 'Logged in !, guten morgen sir!';
         },
-        error: (err: Error) => {
+        error: (err: Error | AxiosError<{ message: string }>) => {
           if (axios.isAxiosError(err)) {
             return err.response?.data.message ?? err.message;
           }

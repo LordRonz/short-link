@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import axios from 'axios';
 import { withIronSessionSsr } from 'iron-session/next';
 import type { GetServerSideProps, NextPage } from 'next';
@@ -33,7 +34,7 @@ const NewLinkPage: NextPage = () => {
         success: () => {
           return 'Success !, new link created!';
         },
-        error: (err: Error) => {
+        error: (err: Error | AxiosError<{ message: string }>) => {
           if (axios.isAxiosError(err)) {
             return err.response?.data.message ?? err.message;
           }

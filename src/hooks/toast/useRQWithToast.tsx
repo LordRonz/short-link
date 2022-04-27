@@ -30,7 +30,7 @@ const useRQWithToast = <T, E>(
     if (toastStatus.current === 'done' && !isLoading) return;
 
     if (isError) {
-      toast.error(toastMessage.error, { id: toastStatus.current });
+      toast.error(toastMessage.error as string, { id: toastStatus.current });
       toastStatus.current = 'done';
     } else if (isLoading) {
       toastStatus.current = toast.loading(toastMessage.loading);
