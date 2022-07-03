@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^1.0.4",
-    "@types/react-copy-to-clipboard": "^5.0.2",
+    "@types/react-copy-to-clipboard": "^5.0.3",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "clsx": "^1.1.1",
