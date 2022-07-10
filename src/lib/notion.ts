@@ -1,6 +1,11 @@
 import { Client } from '@notionhq/client';
 
-import type { LinkResult, PageIcon, TreeResult } from '@/types/notion';
+import type {
+  LinkResult,
+  PageIcon,
+  PropertyValue,
+  TreeResult,
+} from '@/types/notion';
 
 const NOTION_LINK_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_LINK_DATABASE_ID;
 const NOTION_TREE_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_TREE_DATABASE_ID;
@@ -13,6 +18,24 @@ export type Url = {
   slug: string;
   link?: string;
   count: number;
+};
+
+const getPropertyValue = async ({
+  pageId,
+  propertyId,
+}: {
+  pageId: string;
+  propertyId: string;
+}) => {
+  const propertyItem = await notion.pages.properties.retrieve({
+    page_id: pageId,
+    property_id: propertyId,
+  });
+  if (propertyItem.object === 'property_item') {
+    return propertyItem;
+  } else if (propertyItem.object === 'list') {
+    return propertyItem.results[0];
+  }
 };
 
 export const getUrls = async () => {
@@ -56,9 +79,28 @@ export const getUrlBySlug = async (slug: string) => {
 
   const url: Url = {
     pageId: results?.id,
-    slug: results?.properties.slug.title[0]?.plain_text,
-    link: results?.properties.link.rich_text[0]?.plain_text,
-    count: Number(results?.properties.count.rich_text[0]?.plain_text ?? 0),
+    slug:
+      (
+        (await getPropertyValue({
+          pageId: results?.id,
+          propertyId: results.properties?.slug.id,
+        })) as PropertyValue
+      ).title?.plain_text || '',
+    link:
+      (
+        (await getPropertyValue({
+          pageId: results?.id,
+          propertyId: results.properties?.link.id,
+        })) as PropertyValue
+      ).rich_text?.plain_text || '',
+    count: +(
+      (
+        (await getPropertyValue({
+          pageId: results?.id,
+          propertyId: results.properties?.count.id,
+        })) as PropertyValue
+      ).rich_text?.plain_text ?? 0
+    ),
   };
 
   return url;
@@ -167,15 +209,33 @@ export const getSocialTree = async () => {
 
   const results = response.results as unknown as TreeResult[];
 
-  const tree: Tree[] = results
-    .map((result) => ({
-      id: result.id,
-      display: result.properties.display.title[0]?.plain_text,
-      link: result.properties.link.rich_text[0]?.plain_text ?? '',
-      order: result.properties.order.number,
-      icon: result.icon,
-    }))
-    .sort((a, b) => a.order - b.order);
-
+  const tree: Tree[] = (
+    await Promise.all(
+      results.map(async (result) => ({
+        id: result.id,
+        display:
+          (
+            (await getPropertyValue({
+              pageId: result.id,
+              propertyId: result.properties.display.id,
+            })) as PropertyValue
+          ).title?.plain_text || '',
+        link:
+          (
+            (await getPropertyValue({
+              pageId: result.id,
+              propertyId: result.properties.link.id,
+            })) as PropertyValue
+          ).rich_text?.plain_text || '',
+        order: (
+          (await getPropertyValue({
+            pageId: result.id,
+            propertyId: result.properties.order.id,
+          })) as PropertyValue
+        ).number as number,
+        icon: result.icon,
+      }))
+    )
+  ).sort((a, b) => a.order - b.order);
   return tree;
 };

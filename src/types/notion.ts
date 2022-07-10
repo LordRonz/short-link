@@ -65,3 +65,44 @@ type RichText = {
   plain_text: string;
 };
 //#endregion  //*======== Commons ===========
+
+export type PropertyValue = {
+  object: string;
+  type: string;
+  id: string;
+  title?: {
+    type: string;
+    text: {
+      content: string;
+      link: null | string;
+    };
+    annotations: {
+      bold: boolean;
+      italic: boolean;
+      strikethrough: boolean;
+      underline: boolean;
+      code: boolean;
+      color: string;
+    };
+    plain_text: string;
+    href: null | string;
+  };
+  rich_text?: {
+    type: string;
+    text: {
+      content: string;
+      link: null | string;
+    };
+    annotations: {
+      bold: boolean;
+      italic: boolean;
+      strikethrough: boolean;
+      underline: boolean;
+      code: boolean;
+      color: string;
+    };
+    plain_text: string;
+    href: null | string;
+  };
+  number?: number;
+};

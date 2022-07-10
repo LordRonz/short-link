@@ -3,7 +3,19 @@ import { NextResponse } from 'next/server';
 
 import { getUrlBySlug } from '@/lib/notion';
 
-const whitelist = ['favicons', 'fonts', 'images', 'svg', '', 'login', 'new'];
+const whitelist = [
+  'favicons',
+  'fonts',
+  'images',
+  'svg',
+  '',
+  'login',
+  'new',
+  'favicon',
+  '_next',
+  'favicon.ico',
+  'api',
+];
 
 const middleware: NextMiddleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname.split('/')[1];
@@ -11,7 +23,7 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   if (whitelist.includes(path) || process.env.CI) {
     return;
   }
-
+  console.log(req.nextUrl.pathname);
   const url = await getUrlBySlug(path);
 
   /** Don't redirect if /:slug/detail */
