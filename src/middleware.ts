@@ -19,6 +19,7 @@ const whitelist = [
 
 const middleware: NextMiddleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname.split('/')[1];
+  const baseUrl = req.nextUrl.clone();
 
   if (whitelist.includes(path) || process.env.CI) {
     return;
@@ -28,7 +29,9 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
   if (isDetailPage) {
-    return url?.link ? undefined : NextResponse.redirect('/new?slug=' + path);
+    return url?.link
+      ? undefined
+      : NextResponse.redirect(baseUrl.basePath + '/new?slug=' + path);
   }
 
   if (url?.link) {
@@ -51,7 +54,7 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
     return NextResponse.redirect(url.link + req.nextUrl.search);
   }
 
-  return NextResponse.redirect('/new?slug=' + path);
+  return NextResponse.redirect(baseUrl.basePath + '/new?slug=' + path);
 };
 
 export default middleware;
