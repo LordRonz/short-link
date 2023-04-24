@@ -78,7 +78,7 @@ export const getUrlBySlug = async (slug: string) => {
   const results = response.results[0] as unknown as LinkResult;
 
   const url: Url = {
-    pageId: results?.id,
+    pageId: results?.id || '',
     slug:
       (
         (await getPropertyValue({

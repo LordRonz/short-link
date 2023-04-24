@@ -30,7 +30,7 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   if (isDetailPage) {
     return url.link ? undefined : NextResponse.redirect('/new?slug=' + path);
   }
-
+  console.info(url);
   if (url.link) {
     if (process.env.NODE_ENV === 'production') {
       try {
