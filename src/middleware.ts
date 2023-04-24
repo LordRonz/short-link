@@ -23,7 +23,6 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   if (whitelist.includes(path) || process.env.CI) {
     return;
   }
-  console.log(req.nextUrl.pathname);
   const url = await getUrlBySlug(path);
 
   /** Don't redirect if /:slug/detail */
@@ -51,6 +50,8 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
 
     return NextResponse.redirect(url.link + req.nextUrl.search);
   }
+
+  return NextResponse.redirect('/new?slug=' + path);
 };
 
 export default middleware;
