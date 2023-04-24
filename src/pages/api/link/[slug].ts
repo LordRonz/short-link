@@ -11,7 +11,7 @@ const UrlBySlugHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const url = await getUrlBySlug(slug as string);
 
-    if (!url.pageId) {
+    if (!url?.pageId) {
       return res.status(404).json({ message: 'Not found' });
     }
 

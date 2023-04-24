@@ -28,10 +28,10 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
   if (isDetailPage) {
-    return url.link ? undefined : NextResponse.redirect('/new?slug=' + path);
+    return url?.link ? undefined : NextResponse.redirect('/new?slug=' + path);
   }
-  console.info(url);
-  if (url.link) {
+
+  if (url?.link) {
     if (process.env.NODE_ENV === 'production') {
       try {
         // using fetch because edge function won't allow patch request
