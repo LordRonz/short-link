@@ -83,21 +83,21 @@ export const getUrlBySlug = async (slug: string) => {
       (
         (await getPropertyValue({
           pageId: results?.id,
-          propertyId: results.properties?.slug.id,
+          propertyId: results?.properties?.slug.id,
         })) as PropertyValue
       ).title?.plain_text || '',
     link:
       (
         (await getPropertyValue({
           pageId: results?.id,
-          propertyId: results.properties?.link.id,
+          propertyId: results?.properties?.link.id,
         })) as PropertyValue
       ).rich_text?.plain_text || '',
     count: +(
       (
         (await getPropertyValue({
           pageId: results?.id,
-          propertyId: results.properties?.count.id,
+          propertyId: results?.properties?.count.id,
         })) as PropertyValue
       ).rich_text?.plain_text ?? 0
     ),
