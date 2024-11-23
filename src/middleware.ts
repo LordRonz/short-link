@@ -17,6 +17,8 @@ const whitelist = [
   'api',
 ];
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const middleware: NextMiddleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname.split('/')[1];
   const baseUrl = req.nextUrl.clone();
@@ -34,15 +36,20 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
   }
 
   if (url?.link) {
-    if (process.env.NODE_ENV === 'production') {
-      // using fetch because edge function won't allow patch request
-      fetch(req.nextUrl.origin + '/api/increment', {
-        method: 'POST',
-        body: JSON.stringify(url),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).catch((error) => console.error('/api/increment:', { error }));
+    if (isProd) {
+      try {
+        // using fetch because edge function won't allow patch request
+        await fetch(req.nextUrl.origin + '/api/increment', {
+          method: 'POST',
+          body: JSON.stringify(url),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('/api/increment:', { error });
+      }
     }
 
     return NextResponse.redirect(url.link + req.nextUrl.search);
