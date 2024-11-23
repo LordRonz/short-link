@@ -83,28 +83,31 @@ export const getUrlBySlug = async (slug: string) => {
 
   const url: Url = {
     pageId: results?.id || '',
-    slug:
-      (
-        (await getPropertyValue({
+    ...(
+      await Promise.all([
+        getPropertyValue({
           pageId: results?.id ?? '',
           propertyId: results?.properties?.slug.id ?? '',
-        })) as PropertyValue
-      ).title?.plain_text || '',
-    link:
-      (
-        (await getPropertyValue({
+        }),
+        getPropertyValue({
           pageId: results?.id ?? '',
           propertyId: results?.properties?.link.id ?? '',
-        })) as PropertyValue
-      ).rich_text?.plain_text || '',
-    count: +(
-      (
-        (await getPropertyValue({
+        }),
+        getPropertyValue({
           pageId: results?.id ?? '',
           propertyId: results?.properties?.count.id ?? '',
-        })) as PropertyValue
-      ).rich_text?.plain_text ?? 0
-    ),
+        }),
+      ])
+    ).reduce((acc, value, index) => {
+      if (index === 0) {
+        acc.slug = (value as PropertyValue).title?.plain_text || '';
+      } else if (index === 1) {
+        acc.link = (value as PropertyValue).rich_text?.plain_text || '';
+      } else if (index === 2) {
+        acc.count = +((value as PropertyValue).rich_text?.plain_text ?? 0);
+      }
+      return acc;
+    }, {} as Omit<Url, 'pageId'>),
   };
 
   return url;
@@ -215,30 +218,30 @@ export const getSocialTree = async () => {
 
   const tree: Tree[] = (
     await Promise.all(
-      results.map(async (result) => ({
-        id: result.id,
-        display:
-          (
-            (await getPropertyValue({
-              pageId: result.id,
-              propertyId: result.properties.display.id,
-            })) as PropertyValue
-          ).title?.plain_text || '',
-        link:
-          (
-            (await getPropertyValue({
-              pageId: result.id,
-              propertyId: result.properties.link.id,
-            })) as PropertyValue
-          ).rich_text?.plain_text || '',
-        order: (
-          (await getPropertyValue({
+      results.map(async (result) => {
+        const [displayValue, linkValue, orderValue] = await Promise.all([
+          getPropertyValue({
+            pageId: result.id,
+            propertyId: result.properties.display.id,
+          }),
+          getPropertyValue({
+            pageId: result.id,
+            propertyId: result.properties.link.id,
+          }),
+          getPropertyValue({
             pageId: result.id,
             propertyId: result.properties.order.id,
-          })) as PropertyValue
-        ).number as number,
-        icon: result.icon,
-      }))
+          }),
+        ]);
+
+        return {
+          id: result.id,
+          display: (displayValue as PropertyValue).title?.plain_text || '',
+          link: (linkValue as PropertyValue).rich_text?.plain_text || '',
+          order: (orderValue as PropertyValue).number ?? 0,
+          icon: result.icon,
+        };
+      })
     )
   ).sort((a, b) => a.order - b.order);
   return tree;
