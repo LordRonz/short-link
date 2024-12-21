@@ -1,3 +1,4 @@
+import { kv } from '@vercel/kv';
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -27,14 +28,15 @@ const middleware: NextMiddleware = async (
 ) => {
   const path = req.nextUrl.pathname.split('/')[1];
   const baseUrl = req.nextUrl.clone();
-  if (whitelist.includes(path) || process.env.CI) {
+  if (whitelist.includes(path) || process.env.CI || path.length > 128) {
     return;
   }
   const cachedRawUrl = slugMap.get(path);
   const cachedUrl = cachedRawUrl
     ? (JSON.parse(cachedRawUrl) as Url)
     : undefined;
-  const url = cachedUrl ?? (await getUrlBySlug(path));
+  const cachedUrlStep2 = cachedUrl ?? (await kv.get(path));
+  const url = cachedUrlStep2 ?? (await getUrlBySlug(path));
 
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
@@ -47,12 +49,14 @@ const middleware: NextMiddleware = async (
   if (url?.link) {
     if (isProd) {
       event.waitUntil(
-        // using fetch because edge function won't allow patch request
-        incrementLinkCount(url)
+        (async () => {
+          await incrementLinkCount(url);
+          if (!cachedUrlStep2) {
+            await kv.set(path, url);
+          }
+        })()
       );
     }
-
-    console.log(cachedRawUrl, 'YOIKI');
 
     if (!cachedRawUrl) {
       slugMap.set(path, JSON.stringify(url));
