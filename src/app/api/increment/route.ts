@@ -6,6 +6,6 @@ export async function POST(req: Request) {
     throw Error('pageId not sent through body');
   }
   await incrementLinkCount(url);
-  
+
   return new Response('Incremented link count');
 }

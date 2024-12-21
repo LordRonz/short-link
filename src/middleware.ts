@@ -1,7 +1,7 @@
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { getUrlBySlug } from '@/lib/notion';
+import { getUrlBySlug, incrementLinkCount } from '@/lib/notion';
 
 const whitelist = [
   'favicons',
@@ -42,13 +42,7 @@ const middleware: NextMiddleware = async (
     if (isProd) {
       event.waitUntil(
         // using fetch because edge function won't allow patch request
-        fetch(req.nextUrl.origin + '/api/increment', {
-          method: 'POST',
-          body: JSON.stringify(url),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+        incrementLinkCount(url)
       );
     }
 
