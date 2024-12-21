@@ -116,9 +116,15 @@ export const getUrlBySlug = async (slug: string) => {
 /**
  * Increment count column by 1
  */
-export const incrementLinkCount = async (url: Url) => {
+export const incrementLinkCount = async (paramUrl: Url, slug?: string) => {
   if (!NOTION_LINK_DATABASE_ID) {
     throw new Error('NEXT_PUBLIC_NOTION_LINK_DATABASE_ID env is not defined');
+  }
+
+  let url: Url = paramUrl;
+
+  if (slug) {
+    url = (await getUrlBySlug(slug)) ?? paramUrl;
   }
 
   if (!url.pageId) {

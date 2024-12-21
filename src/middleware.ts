@@ -50,7 +50,7 @@ const middleware: NextMiddleware = async (
     if (isProd) {
       event.waitUntil(
         (async () => {
-          await incrementLinkCount(url);
+          await incrementLinkCount(url, url.slug);
           if (!cachedUrlStep2) {
             await kv.set(path, url, { ex: 60 * 60 * 24 });
           }
