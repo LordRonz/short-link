@@ -1,7 +1,7 @@
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { getUrlBySlug, incrementLinkCount } from '@/lib/notion';
+import { getUrlBySlug, incrementLinkCount, type Url } from '@/lib/notion';
 
 const whitelist = [
   'favicons',
@@ -19,6 +19,8 @@ const whitelist = [
 
 const isProd = process.env.NODE_ENV === 'production';
 
+const slugMap = new Map<string, string>();
+
 const middleware: NextMiddleware = async (
   req: NextRequest,
   event: NextFetchEvent
@@ -28,7 +30,11 @@ const middleware: NextMiddleware = async (
   if (whitelist.includes(path) || process.env.CI) {
     return;
   }
-  const url = await getUrlBySlug(path);
+  const cachedRawUrl = slugMap.get(path);
+  const cachedUrl = cachedRawUrl
+    ? (JSON.parse(cachedRawUrl) as Url)
+    : undefined;
+  const url = cachedUrl ?? (await getUrlBySlug(path));
 
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
@@ -44,6 +50,12 @@ const middleware: NextMiddleware = async (
         // using fetch because edge function won't allow patch request
         incrementLinkCount(url)
       );
+    }
+
+    console.log(cachedRawUrl, 'YOIKI');
+
+    if (!cachedRawUrl) {
+      slugMap.set(path, JSON.stringify(url));
     }
 
     return NextResponse.redirect(url.link + req.nextUrl.search);
