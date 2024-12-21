@@ -52,7 +52,7 @@ const middleware: NextMiddleware = async (
         (async () => {
           await incrementLinkCount(url);
           if (!cachedUrlStep2) {
-            await kv.set(path, url);
+            await kv.set(path, url, { ex: 60 * 60 * 24 });
           }
         })()
       );
