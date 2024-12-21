@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import type { Url } from '@/lib/notion';
 import { incrementLinkCount } from '@/lib/notion';
 
+export const runtime = 'edge';
+
 const increment = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const url = req.body as Url;
