@@ -15,7 +15,10 @@ const UrlBySlugHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(404).json({ message: 'Not found' });
     }
 
-    res.status(200).json(url);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { pageId: _, ...sanitizedUrl } = url;
+
+    res.status(200).json(sanitizedUrl);
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
