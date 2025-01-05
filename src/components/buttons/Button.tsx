@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 
-const enum ButtonVariant {
+export const enum ButtonVariant {
   primary,
   outline,
   ghost,
@@ -74,7 +74,7 @@ const Button = ({
         ],
         'disabled:cursor-not-allowed',
         isLoading &&
-          'relative !text-transparent hover:!text-transparent !cursor-wait !transition-none'
+          'relative !text-transparent hover:!text-transparent !cursor-wait !transition-none',
       )}
       {...rest}
     >
@@ -86,7 +86,7 @@ const Button = ({
               'text-white': variant === 'dark' || variant === 'primary',
               'text-black': variant === 'light',
               'text-primary-500': variant === 'outline' || variant === 'ghost',
-            }
+            },
           )}
         >
           <ImSpinner2 className='animate-spin' />

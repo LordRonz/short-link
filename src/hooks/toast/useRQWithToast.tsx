@@ -1,6 +1,6 @@
+import { UseQueryResult } from '@tanstack/react-query';
 import * as React from 'react';
 import toast from 'react-hot-toast';
-import { UseQueryResult } from 'react-query';
 
 import { DEFAULT_TOAST_MESSAGE } from '@/constant/toast';
 
@@ -13,7 +13,7 @@ type OptionType = {
 
 const useRQWithToast = <T, E>(
   query: UseQueryResult<T, E>,
-  { runCondition = true, ...customMessages }: OptionType = {}
+  { runCondition = true, ...customMessages }: OptionType = {},
 ) => {
   const { data, isError, isLoading } = query;
 
