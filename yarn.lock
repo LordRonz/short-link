@@ -4091,10 +4091,10 @@ postcss@^8.4.47, postcss@^8.4.49:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-preact@^10.13.2:
-  version "10.13.2"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
-  integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
+preact@^10.26.7:
+  version "10.26.7"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.26.7.tgz#7b4b2620dfbbd9d4654d88f1b3cee0fb9dea6e80"
+  integrity sha512-43xS+QYc1X1IPbw03faSgY6I6OYWcLrJRv3hU0+qMOfh/XCHcP0MX2CVjNARYR2cC/guu975sta4OcjlczxD7g==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
