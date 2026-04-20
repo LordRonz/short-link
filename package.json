@@ -23,7 +23,7 @@
     "@notionhq/client": "^2.2.15",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@vercel/kv": "^3.0.0",
-    "axios": "^1.7.9",
+    "axios": "^1.15.1",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
