@@ -1,4 +1,3 @@
-/** eslint-disable @next/next/no-img-element */
 import clsx from 'clsx';
 
 import Accent from '@/components/Accent';
@@ -21,8 +20,8 @@ export const Home = ({ urls }: { urls: Tree[] }) => {
               <div
                 className={clsx(
                   'opacity-0 group-hover:opacity-100',
-                  'animate-tilt absolute -inset-0.5 z-0 rounded blur',
-                  'bg-gradient-to-r from-rose-800 to-amber-700',
+                  'animate-tilt absolute -inset-0.5 z-0 rounded-sm blur-sm',
+                  'bg-linear-to-r from-rose-800 to-amber-700',
                   'transition duration-300 group-hover:duration-200',
                   'pointer-events-none',
                 )}
@@ -35,7 +34,7 @@ export const Home = ({ urls }: { urls: Tree[] }) => {
                   'px-4 py-4 font-semibold transition-colors md:text-lg ',
                   'bg-dark',
                   'border border-gray-700',
-                  'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
+                  'focus:outline-hidden focus-visible:ring-3 focus-visible:ring-primary-500',
                 )}
               >
                 {icon &&

@@ -25,7 +25,7 @@ const ArrowLink = <C extends React.ElementType>({
       className={clsx(
         className,
         'gap-[0.25em] group',
-        direction === 'left' && 'flex-row-reverse'
+        direction === 'left' && 'flex-row-reverse',
       )}
     >
       <span>{children}</span>
@@ -39,7 +39,7 @@ const ArrowLink = <C extends React.ElementType>({
           'relative',
           'transition-transform duration-200',
           direction === 'right' ? 'motion-safe:-translate-x-1' : 'rotate-180',
-          'group-hover:translate-x-0'
+          'group-hover:translate-x-0',
         )}
       >
         <path
@@ -54,7 +54,7 @@ const ArrowLink = <C extends React.ElementType>({
           className={clsx(
             'transition-all duration-200 origin-left',
             'opacity-0 motion-safe:-translate-x-1',
-            'group-hover:opacity-100 group-hover:translate-x-0'
+            'group-hover:opacity-100 group-hover:translate-x-0',
           )}
         />
       </svg>

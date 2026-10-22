@@ -32,7 +32,7 @@ const NextImage = ({
   ...rest
 }: NextImageProps) => {
   const [status, setStatus] = React.useState(
-    useSkeleton ? 'loading' : 'complete'
+    useSkeleton ? 'loading' : 'complete',
   );
   const widthIsSet = className?.includes('w-') ?? false;
 
@@ -44,7 +44,7 @@ const NextImage = ({
       <Image
         className={clsx(
           imgClassName,
-          status === 'loading' && clsx('animate-pulse', blurClassName)
+          status === 'loading' && clsx('animate-pulse', blurClassName),
         )}
         src={src}
         width={width}

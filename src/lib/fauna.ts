@@ -15,8 +15,8 @@ export const getUser = async (body: User) => {
         userRef: q.Match(q.Index('get_user_by_name'), name),
         userExists: q.Exists(q.Var('userRef')),
       },
-      q.If(q.Var('userExists'), q.Get(q.Var('userRef')), null)
-    )
+      q.If(q.Var('userExists'), q.Get(q.Var('userRef')), null),
+    ),
   );
 
   return data;

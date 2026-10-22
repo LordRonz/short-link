@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-
 import type { Viewport } from 'next';
 import { ThemeProvider } from 'next-themes';
 

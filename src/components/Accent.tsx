@@ -8,8 +8,8 @@ const Accent = ({ children, className }: AccentType) => {
       className={clsx(
         'transition-colors',
         // 'from-primary-300/40 to-primary-400/40 via-primary-300/40',
-        'text-transparent bg-clip-text bg-gradient-to-tr from-primary-300 to-violet-500',
-        className
+        'text-transparent bg-clip-text bg-linear-to-tr from-primary-300 to-violet-500',
+        className,
       )}
     >
       {children}

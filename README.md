@@ -11,6 +11,25 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Use Node.js 24 LTS (`nvm use`) and Yarn Classic 1.22.22. Install dependencies
+with `yarn install --frozen-lockfile`, and configure the values in `.env.example`.
+
+The dependencies target their latest stable releases, including TypeScript 7.
+Oxlint and Oxfmt handle linting and formatting. Node types follow the Node 24
+runtime. Tailwind 4 requires modern browsers (Safari 16.4+,
+Chrome 111+, Firefox 128+).
+
+Notion uses the 2026-03-11 API. Keep the existing database IDs; the app discovers
+the single data source inside each database. Databases with multiple data
+sources need an explicit selection before they can be used.
+
+Better Auth's CLI is now `yarn auth` (the `auth` package), replacing the deprecated
+`@better-auth/cli`. Use `yarn auth generate --config src/lib/auth.ts` to review
+schema changes, then apply them through Drizzle as appropriate for your database.
+
+Validate changes with `yarn lint:strict`, `yarn tsc`, `yarn test`, and `yarn build`.
+Run the browser tests with `yarn cy:headless` while `yarn start:ci` is running.
+
 First, run the development server:
 
 ```bash

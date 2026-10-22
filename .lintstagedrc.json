@@ -1,4 +1,4 @@
 {
-  "src/**/*.{js,jsx,ts,tsx}": ["eslint --max-warnings=0", "prettier -w"],
-  "src/**/*.{json,css,scss,md,mdx}": ["prettier -w"]
+  "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": ["oxlint --deny-warnings", "oxfmt"],
+  "*.{json,jsonc,css,scss,md,mdx,yaml,yml,toml,html}": ["oxfmt"]
 }

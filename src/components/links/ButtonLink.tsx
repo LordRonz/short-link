@@ -26,9 +26,9 @@ const ButtonLink = ({
     {...rest}
     className={clsx(
       className,
-      'inline-flex items-center px-4 py-2 font-semibold rounded',
-      'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
-      'shadow-sm',
+      'inline-flex items-center px-4 py-2 font-semibold rounded-sm',
+      'focus:outline-hidden focus-visible:ring-3 focus-visible:ring-primary-500',
+      'shadow-xs',
       'transform-gpu scale-100 hover:scale-[1.03] active:scale-[0.97]',
       'transition duration-300',
       'animate-shadow',

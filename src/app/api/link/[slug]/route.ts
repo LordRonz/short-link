@@ -30,7 +30,6 @@ export async function GET(
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { pageId: _, ...sanitizedUrl } = url;
 
   return Response.json(sanitizedUrl);

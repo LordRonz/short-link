@@ -11,7 +11,28 @@ const NOTION_LINK_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_LINK_DATABASE_ID;
 const NOTION_TREE_DATABASE_ID = process.env.NEXT_PUBLIC_NOTION_TREE_DATABASE_ID;
 const NOTION_INTEGRATION_SECRET = process.env.NOTION_INTEGRATION_SECRET;
 
-const notion = new Client({ auth: NOTION_INTEGRATION_SECRET });
+const notion = new Client({
+  auth: NOTION_INTEGRATION_SECRET,
+  notionVersion: '2026-03-11',
+});
+
+const dataSourceIds = new Map<string, string>();
+
+const getDataSourceId = async (databaseId: string) => {
+  const cached = dataSourceIds.get(databaseId);
+  if (cached) return cached;
+
+  const database = await notion.databases.retrieve({ database_id: databaseId });
+  if (!('data_sources' in database) || database.data_sources.length !== 1) {
+    throw new Error(
+      `Notion database ${databaseId} must have exactly one data source`,
+    );
+  }
+
+  const dataSourceId = database.data_sources[0].id;
+  dataSourceIds.set(databaseId, dataSourceId);
+  return dataSourceId;
+};
 
 export type Url = {
   pageId: string;
@@ -43,8 +64,8 @@ export const getUrls = async () => {
     throw new Error('NEXT_PUBLIC_NOTION_LINK_DATABASE_ID env is not defined');
   }
 
-  const response = await notion.databases.query({
-    database_id: NOTION_LINK_DATABASE_ID,
+  const response = await notion.dataSources.query({
+    data_source_id: await getDataSourceId(NOTION_LINK_DATABASE_ID),
   });
 
   const results = response.results as unknown as LinkResult[];
@@ -67,8 +88,8 @@ export const getUrlBySlug = async (slug: string) => {
     throw new Error('NEXT_PUBLIC_NOTION_LINK_DATABASE_ID env is not defined');
   }
 
-  const response = await notion.databases.query({
-    database_id: NOTION_LINK_DATABASE_ID,
+  const response = await notion.dataSources.query({
+    data_source_id: await getDataSourceId(NOTION_LINK_DATABASE_ID),
     filter: {
       property: 'slug',
       title: { equals: slug },
@@ -98,16 +119,19 @@ export const getUrlBySlug = async (slug: string) => {
           propertyId: results?.properties?.count.id ?? '',
         }),
       ])
-    ).reduce((acc, value, index) => {
-      if (index === 0) {
-        acc.slug = (value as PropertyValue).title?.plain_text || '';
-      } else if (index === 1) {
-        acc.link = (value as PropertyValue).rich_text?.plain_text || '';
-      } else if (index === 2) {
-        acc.count = +((value as PropertyValue).rich_text?.plain_text ?? 0);
-      }
-      return acc;
-    }, {} as Omit<Url, 'pageId'>),
+    ).reduce(
+      (acc, value, index) => {
+        if (index === 0) {
+          acc.slug = (value as PropertyValue).title?.plain_text || '';
+        } else if (index === 1) {
+          acc.link = (value as PropertyValue).rich_text?.plain_text || '';
+        } else if (index === 2) {
+          acc.count = +((value as PropertyValue).rich_text?.plain_text ?? 0);
+        }
+        return acc;
+      },
+      {} as Omit<Url, 'pageId'>,
+    ),
   };
 
   return url;
@@ -146,8 +170,8 @@ export const checkSlugIsTaken = async (slug: string) => {
     throw new Error('NEXT_PUBLIC_NOTION_LINK_DATABASE_ID env is not defined');
   }
 
-  const response = await notion.databases.query({
-    database_id: NOTION_LINK_DATABASE_ID,
+  const response = await notion.dataSources.query({
+    data_source_id: await getDataSourceId(NOTION_LINK_DATABASE_ID),
     filter: {
       property: 'slug',
       title: {
@@ -169,7 +193,7 @@ export const addLink = async (slug: string, link: string) => {
 
   await notion.pages.create({
     parent: {
-      database_id: NOTION_LINK_DATABASE_ID,
+      data_source_id: await getDataSourceId(NOTION_LINK_DATABASE_ID),
     },
     properties: {
       slug: {
@@ -216,8 +240,8 @@ export const getSocialTree = async () => {
     throw new Error('NEXT_PUBLIC_NOTION_TREE_DATABASE_ID env is not defined');
   }
 
-  const response = await notion.databases.query({
-    database_id: NOTION_TREE_DATABASE_ID,
+  const response = await notion.dataSources.query({
+    data_source_id: await getDataSourceId(NOTION_TREE_DATABASE_ID),
   });
 
   const results = response.results as unknown as TreeResult[];
@@ -247,7 +271,7 @@ export const getSocialTree = async () => {
           order: (orderValue as PropertyValue).number ?? 0,
           icon: result.icon,
         };
-      })
+      }),
     )
   ).sort((a, b) => a.order - b.order);
   return tree;

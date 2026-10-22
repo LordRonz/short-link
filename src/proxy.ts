@@ -22,9 +22,9 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const slugMap = new Map<string, string>();
 
-const middleware: NextMiddleware = async (
+const proxy: NextMiddleware = async (
   req: NextRequest,
-  event: NextFetchEvent
+  event: NextFetchEvent,
 ) => {
   const path = req.nextUrl.pathname.split('/')[1];
   const baseUrl = req.nextUrl.clone();
@@ -54,7 +54,7 @@ const middleware: NextMiddleware = async (
           if (!cachedUrlStep2) {
             await kv.set(path, url, { ex: 60 * 60 * 24 });
           }
-        })()
+        })(),
       );
     }
 
@@ -81,4 +81,4 @@ export const config = {
   ],
 };
 
-export default middleware;
+export default proxy;

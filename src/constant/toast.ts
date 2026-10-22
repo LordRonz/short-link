@@ -6,7 +6,6 @@ export const DEFAULT_TOAST_MESSAGE = {
   success: () => {
     return 'Logged in !, guten morgen sir!';
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: (e: Error | AxiosError<{ message: string }>) => {
     if (axios.isAxiosError(e)) {
       return e.response?.data.message ?? e.message;

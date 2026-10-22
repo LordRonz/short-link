@@ -16,18 +16,19 @@ import useRQWithToast from '@/hooks/toast/useRQWithToast';
 import type { Url } from '@/lib/notion';
 import trimHttps from '@/lib/trimHttp';
 
+const subscribe = () => () => {};
+
 const DetailPage = ({ slug }: { slug: string }) => {
   //#region  //*=========== Get Route Param ===========
   const idParam = slug;
   //#endregion  //*======== Get Route Param ===========
 
   //#region  //*=========== Link ===========
-  const [link, setLink] = React.useState<string>();
-
-  React.useEffect(() => {
-    const origin = trimHttps(window.location.href).replace('/detail', '');
-    setLink(origin);
-  }, [idParam]);
+  const link = React.useSyncExternalStore(
+    subscribe,
+    () => trimHttps(window.location.href).replace('/detail', ''),
+    () => undefined,
+  );
   //#endregion  //*======== Link ===========
 
   //#region  //*=========== Get Url Data ===========
@@ -57,7 +58,7 @@ const DetailPage = ({ slug }: { slug: string }) => {
           {link ? (
             <CopyBox link={link} className='mt-8' />
           ) : (
-            <Skeleton className='mt-8 w-72 h-14 rounded' />
+            <Skeleton className='mt-8 w-72 h-14 rounded-sm' />
           )}
 
           <div className='mt-6'>

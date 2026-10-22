@@ -14,12 +14,12 @@ const CopyBox = ({ className, link, ...rest }: CopyBoxProps) => {
   return (
     <div
       className={clsx(
-        'flex gap-2 items-center p-2 pl-4 max-w-sm rounded border border-gray-600',
-        className
+        'flex gap-2 items-center p-2 pl-4 max-w-sm rounded-sm border border-gray-600',
+        className,
       )}
       {...rest}
     >
-      <div className='flex-grow text-left'>
+      <div className='grow text-left'>
         <CustomLink href={link} className='text-lg'>
           {trimHttps(link)}
         </CustomLink>
@@ -29,7 +29,7 @@ const CopyBox = ({ className, link, ...rest }: CopyBoxProps) => {
         text={link}
         onCopy={() => toast.success(`${trimHttps(link)} copied to clipboard`)}
       >
-        <button className='p-2 rounded-full hover:text-primary-400 focus:ring focus:ring-primary-400 focus:outline-none'>
+        <button className='p-2 rounded-full hover:text-primary-400 focus:ring-3 focus:ring-primary-400 focus:outline-hidden'>
           <HiClipboard className='text-lg' />
         </button>
       </CopyToClipboard>
