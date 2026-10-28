@@ -60,7 +60,7 @@
     "local-cypress": "^1.2.8",
     "next-sitemap": "^4.2.3",
     "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
+    "oxlint": "^1.90.0",
     "postcss": "^8.5.31",
     "tailwindcss": "^4.3.3",
     "typescript": "7.0.2"
