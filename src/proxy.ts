@@ -21,6 +21,27 @@ const whitelist = [
 const isProd = process.env.NODE_ENV === 'production';
 
 const slugMap = new Map<string, string>();
+const pendingUrls = new Map<string, Promise<Url | undefined>>();
+
+const resolveUrl = async (path: string, event: NextFetchEvent) => {
+  const cachedUrl = await kv.get<Url>(path);
+  const url = cachedUrl ?? (await getUrlBySlug(path));
+
+  if (url?.link) {
+    slugMap.set(path, JSON.stringify(url));
+    if (isProd && !cachedUrl) {
+      event.waitUntil(
+        (async () => {
+          await kv.set(path, url, { ex: 60 * 60 * 24 });
+        })().catch(() => {
+          console.error('Redirect cache write failed');
+        }),
+      );
+    }
+  }
+
+  return url;
+};
 
 const proxy: NextMiddleware = async (
   req: NextRequest,
@@ -35,8 +56,15 @@ const proxy: NextMiddleware = async (
   const cachedUrl = cachedRawUrl
     ? (JSON.parse(cachedRawUrl) as Url)
     : undefined;
-  const cachedUrlStep2 = cachedUrl ?? (await kv.get(path));
-  const url = cachedUrlStep2 ?? (await getUrlBySlug(path));
+  let url = cachedUrl;
+  if (!url) {
+    let pending = pendingUrls.get(path);
+    if (!pending) {
+      pending = resolveUrl(path, event).finally(() => pendingUrls.delete(path));
+      pendingUrls.set(path, pending);
+    }
+    url = await pending;
+  }
 
   /** Don't redirect if /:slug/detail */
   const isDetailPage = req.nextUrl.pathname.split('/')[2] === 'detail';
@@ -51,15 +79,10 @@ const proxy: NextMiddleware = async (
       event.waitUntil(
         (async () => {
           await incrementLinkCount(url, url.slug);
-          if (!cachedUrlStep2) {
-            await kv.set(path, url, { ex: 60 * 60 * 24 });
-          }
-        })(),
+        })().catch(() => {
+          console.error('Redirect click count failed');
+        }),
       );
-    }
-
-    if (!cachedRawUrl) {
-      slugMap.set(path, JSON.stringify(url));
     }
 
     return NextResponse.redirect(url.link + req.nextUrl.search);
