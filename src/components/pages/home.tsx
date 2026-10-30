@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'cn';
 
 import Accent from '@/components/Accent';
 import CustomLink from '@/components/links/CustomLink';

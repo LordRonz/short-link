@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'cn';
 
 type LinkCardProps = React.ComponentPropsWithoutRef<'div'>;
 

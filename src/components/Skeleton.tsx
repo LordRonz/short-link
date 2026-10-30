@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'cn';
 
 type SkeletonProps = React.ComponentPropsWithoutRef<'div'>;
 

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'cn';
 import * as React from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 

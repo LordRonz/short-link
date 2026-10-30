@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'cn';
 
 import type { NextImageProps } from '@/components/NextImage';
 import NextImage from '@/components/NextImage';
