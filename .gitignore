@@ -41,6 +41,6 @@ yarn-error.log*
 robots.txt
 sitemap*.xml
 
-# cypress
-cypress/videos
-cypress/screenshots
+# Playwright
+/test-results/
+/playwright-report/

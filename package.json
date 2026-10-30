@@ -15,9 +15,10 @@
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
     "prepare": "husky",
-    "cy": "cypress open",
-    "cy:headless": "cypress run",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@notionhq/client": "^5.27.1",
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/bcrypt": "^6.0.0",
     "@types/node": "24.19.2",
@@ -53,11 +55,9 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "^19.3.0",
     "auth": "^1.7.12",
-    "cypress": "^16.2.0",
     "drizzle-kit": "^0.31.11",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
-    "local-cypress": "^1.2.8",
     "next-sitemap": "^4.2.3",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.89.0",

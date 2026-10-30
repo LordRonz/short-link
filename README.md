@@ -28,7 +28,11 @@ Better Auth's CLI is now `yarn auth` (the `auth` package), replacing the depreca
 schema changes, then apply them through Drizzle as appropriate for your database.
 
 Validate changes with `yarn lint:strict`, `yarn tsc`, `yarn test`, and `yarn build`.
-Run the browser tests with `yarn cy:headless` while `yarn start:ci` is running.
+Install the browser once with `yarn playwright install --no-shell chromium`, then run
+`yarn test:e2e`. Playwright builds and starts the app automatically, using
+test-only Notion responses and credentials so the suite needs no live services.
+Use `yarn test:e2e:ui` for interactive testing and `yarn test:e2e:report` to view
+the HTML report. Failed tests retain traces and screenshots.
 
 First, run the development server:
 
