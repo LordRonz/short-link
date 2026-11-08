@@ -1267,10 +1267,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@notionhq/client@^5.27.1":
-  version "5.27.1"
-  resolved "https://registry.npmjs.org/@notionhq/client/-/client-5.27.1.tgz#0d6b3e04f68f7574f011adfe0b548ef3edaf70fe"
-  integrity sha512-WedYyPNMpQbE4Dz5h7zHTsh03veUGqBzxWyztbIh0tNbgHU+XbDi/jc1KgL3j1p8y06nHLEmGYygntwICxJUNw==
+"@notionhq/client@^5.31.1":
+  version "5.31.1"
+  resolved "https://registry.yarnpkg.com/@notionhq/client/-/client-5.31.1.tgz#60b682eeed737cf3bbb5edc3c0ca39c0da71db4a"
+  integrity sha512-LuVlgHTkHPZf0LOILKVaDboYOyIXNHP9x2DSMhrJzUJjB7GzWjves1OA+8iqJxn1QPW6OqXdp0sS/z0Vh+JACA==
 
 "@oxfmt/binding-android-arm-eabi@0.74.0":
   version "0.74.0"
